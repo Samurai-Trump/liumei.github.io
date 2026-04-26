@@ -314,7 +314,7 @@ a {
     white-space: nowrap;
 }
 
-/* Scroll Indicators */
+/* Scroll Indicators (Neon Buttons) */
 .scroll-indicator {
     position: fixed;
     bottom: 40px;
@@ -322,21 +322,35 @@ a {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: rgba(255,255,255,0.8);
+    color: var(--primary-color);
     font-size: 1.1rem;
     font-weight: 500;
     letter-spacing: 2px;
-    pointer-events: none; /* let mouse pass through */
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
     opacity: 0;
-    background: rgba(0,0,0,0.3);
-    padding: 10px 20px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 12px 24px;
     border-radius: 30px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
 }
 .scroll-indicator.visible {
+    opacity: 0.8;
+    pointer-events: auto;
+}
+.scroll-indicator:hover, .scroll-indicator.active-glow {
     opacity: 1;
+    color: #ffffff;
+    background: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 0 20px var(--primary-glow), inset 0 0 10px var(--primary-glow);
+    text-shadow: 0 0 8px #ffffff, 0 0 15px var(--primary-color);
+    transform: scale(1.05);
+}
+.scroll-indicator:active {
+    transform: scale(0.95);
 }
 .scroll-indicator.scroll-left {
     left: 40px;
@@ -456,9 +470,9 @@ a {
 @media (max-width: 768px) {
     .header { padding: 0 20px; }
     .main-nav { display: none; } /* Hide nav on mobile for simplicity */
-    .hero-container { padding-top: 60px; }
-    .panel { flex: 0 0 20vw; min-width: 60px; }
-    .panel:hover, .panel.active { flex: 0 0 70vw; }
+    .hero-container { padding-top: 60px; scroll-snap-type: x mandatory; }
+    .panel { flex: 0 0 20vw; min-width: 60px; scroll-snap-align: center; }
+    .panel:hover, .panel.active { flex: 0 0 70vw; scroll-snap-align: center; }
     .panel-content { left: 15px; right: 15px; bottom: 30px; }
     .panel h2 { font-size: 2.5rem; white-space: normal; }
     .panel p { font-size: 0.85rem; white-space: normal; }
