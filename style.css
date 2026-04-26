@@ -175,7 +175,7 @@ a {
 }
 
 /* Hover expansion effect */
-.panel:hover {
+.panel:hover, .panel.active {
     flex: 0 0 25vw;
 }
 
@@ -192,7 +192,7 @@ a {
     transition: transform 6s ease;
 }
 
-.panel:hover .panel-bg {
+.panel:hover .panel-bg, .panel.active .panel-bg {
     transform: scale(1.22);
 }
 
@@ -211,7 +211,7 @@ a {
     transition: var(--transition-smooth);
     pointer-events: none;
 }
-.panel:hover .panel-overlay {
+.panel:hover .panel-overlay, .panel.active .panel-overlay {
     background: linear-gradient(to bottom, 
         rgba(15,23,42,0.95) 0%, 
         rgba(15,23,42,0.6) 10%, 
@@ -254,7 +254,7 @@ a {
     text-shadow: 0 0 5px var(--cat-color, var(--primary-color)), 0 0 10px var(--cat-glow, var(--primary-glow)), 0 0 20px var(--cat-glow, var(--primary-glow));
 }
 
-.panel:hover .panel-category-label {
+.panel:hover .panel-category-label, .panel.active .panel-category-label {
     opacity: 1;
     transform: translate(-50%, 5px) scale(1.1);
     text-shadow: 0 0 8px var(--cat-color, var(--primary-color)), 0 0 15px var(--cat-glow, var(--primary-glow)), 0 0 25px var(--cat-glow, var(--primary-glow));
@@ -273,7 +273,7 @@ a {
     pointer-events: none;
 }
 
-.panel:hover .panel-content {
+.panel:hover .panel-content, .panel.active .panel-content {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
@@ -302,7 +302,7 @@ a {
     transition: var(--transition-smooth);
 }
 
-.panel:hover h2 {
+.panel:hover h2, .panel.active h2 {
     text-shadow: 0 0 5px var(--cat-color, var(--primary-color)), 0 0 15px var(--cat-glow, var(--primary-glow));
 }
 
@@ -450,7 +450,7 @@ a {
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .main-nav ul { gap: 20px; }
-    .panel:hover { flex: 0 0 40vw; }
+    .panel:hover, .panel.active { flex: 0 0 40vw; }
 }
 
 @media (max-width: 768px) {
@@ -458,7 +458,7 @@ a {
     .main-nav { display: none; } /* Hide nav on mobile for simplicity */
     .hero-container { padding-top: 60px; }
     .panel { flex: 0 0 20vw; min-width: 60px; }
-    .panel:hover { flex: 0 0 70vw; }
+    .panel:hover, .panel.active { flex: 0 0 70vw; }
     .panel-content { left: 15px; right: 15px; bottom: 30px; }
     .panel h2 { font-size: 2.5rem; white-space: normal; }
     .panel p { font-size: 0.85rem; white-space: normal; }

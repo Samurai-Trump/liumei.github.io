@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const autoScrollSpeed = 6;
 
         document.addEventListener('mousemove', (e) => {
+            // Disable auto-scroll on small screens or touch devices to prevent erratic behavior
+            if (window.innerWidth <= 768 || window.matchMedia("(pointer: coarse)").matches) {
+                stopAutoScroll();
+                return;
+            }
+
             const x = e.clientX;
             const windowWidth = window.innerWidth;
             
@@ -90,5 +96,61 @@ document.addEventListener('DOMContentLoaded', () => {
             
             requestAnimationFrame(autoScrollLoop);
         }
+
+        // Mobile touch drag & snap back logic
+        let activePanel = null;
+        let isDragging = false;
+        let touchStartX = 0;
+
+        // Panel click to activate and center
+        const panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => {
+            panel.addEventListener('click', () => {
+                panels.forEach(p => p.classList.remove('active'));
+                panel.classList.add('active');
+                activePanel = panel;
+                
+                // On mobile, try to center it
+                if (window.innerWidth <= 768 || window.matchMedia("(pointer: coarse)").matches) {
+                    setTimeout(() => {
+                        centerActivePanel();
+                    }, 300); // Wait for CSS flex transition to finish before centering
+                }
+            });
+        });
+
+        function centerActivePanel() {
+            if (!activePanel) return;
+            const panelLeft = activePanel.offsetLeft;
+            const panelWidth = activePanel.offsetWidth;
+            const containerHalf = heroContainer.offsetWidth / 2;
+            
+            heroContainer.scrollTo({
+                left: panelLeft - containerHalf + (panelWidth / 2),
+                behavior: 'smooth'
+            });
+        }
+
+        // Snap back to active panel after scrolling on mobile
+        heroContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            isDragging = false;
+        });
+
+        heroContainer.addEventListener('touchmove', (e) => {
+            const currentX = e.touches[0].clientX;
+            if (Math.abs(currentX - touchStartX) > 10) {
+                isDragging = true; // User is scrolling
+            }
+        });
+
+        heroContainer.addEventListener('touchend', () => {
+            if (isDragging && activePanel && (window.innerWidth <= 768 || window.matchMedia("(pointer: coarse)").matches)) {
+                // If the user was scrolling and releases, snap back to the active panel
+                setTimeout(() => {
+                    centerActivePanel();
+                }, 100);
+            }
+        });
     }
 });
